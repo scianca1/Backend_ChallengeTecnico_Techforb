@@ -26,7 +26,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
-    @Autowired  // Esto le dice a Spring que inyecte automáticamente el UserRepository
+    @Autowired
     public AuthService(UserRepository userRepository,
                        JwtService jwtService,
                        AuthenticationManager authenticationManager,

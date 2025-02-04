@@ -63,10 +63,10 @@ public class AuthController {
                 authservice.register(request);
                 return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("respose","Usuario Registrado exitosamente!"));
             }else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("response","Alguno de los campos no cumple con los requerimiento: -Usuario no puede estar vacio" +
-                        "-Contraceña deve tener al menos 8 caracteres" +
-                        "-Contraceña debe ser igual en los dos ultimos campos" +
-                        "-El email debe ser un mail valido"));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("response","Alguno de los campos no cumple con los requerimiento: Usuario no puede estar vacio," +
+                        " Contraceña deve tener al menos 8 caracteres," +
+                        " Contraceña debe ser igual en los dos ultimos campos," +
+                        " El email debe ser un mail valido"));
             }
 
         } catch (Exception e) {

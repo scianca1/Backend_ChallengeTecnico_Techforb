@@ -11,5 +11,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository repository;
 
-
+public Usuario getUsuarioByEmail(String email){
+    return repository.findByEmail(email).orElseThrow(()-> new RuntimeException("Tenemos problamas para encontrar tu email"));
+}
 }

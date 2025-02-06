@@ -12,6 +12,7 @@ import lombok.*;
 @Builder
 public class Sensor {
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     @ManyToOne
     private Planta planta;
@@ -23,4 +24,6 @@ public class Sensor {
     private Long alertasRojas;
     @Column
     private boolean habilitado;
+    @Column
+    private String nombre;
 }

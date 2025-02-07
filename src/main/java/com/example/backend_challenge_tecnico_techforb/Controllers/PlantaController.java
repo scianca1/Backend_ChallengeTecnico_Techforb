@@ -33,6 +33,19 @@ public class PlantaController {
 
     @GetMapping(value = "")
     public  ResponseEntity<?> getAll(){
-        return ResponseEntity.ok(service.getAll());
+        try {
+            return ResponseEntity.ok(service.getAll());
+        }catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("Error",e.getMessage()));
+        }
+    }
+    @GetMapping(value = "/Lecturas")
+    public ResponseEntity<?>getAllLecturas(){
+        try {
+            return  ResponseEntity.ok(service.getAllLecturas());
+        }catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("Error",e.getMessage()));
+        }
+
     }
 }

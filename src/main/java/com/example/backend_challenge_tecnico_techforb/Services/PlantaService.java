@@ -1,6 +1,7 @@
 package com.example.backend_challenge_tecnico_techforb.Services;
 
 import com.example.backend_challenge_tecnico_techforb.Dtos.Request.PlantaDtoRequest;
+import com.example.backend_challenge_tecnico_techforb.Dtos.Response.LecturasGeneralesDto;
 import com.example.backend_challenge_tecnico_techforb.Dtos.Response.PlantaDtoResponse;
 import com.example.backend_challenge_tecnico_techforb.Entitys.Planta;
 import com.example.backend_challenge_tecnico_techforb.Entitys.Usuario;
@@ -56,5 +57,18 @@ public class PlantaService {
 //        List<PlantaDtoResponse> plantas=repository.findAll().stream().map(PlantaDtoResponse::new).toList() ;
         List<PlantaDtoResponse> plantas=repository.obtenerPlantasDto();
         return plantas;
+    }
+
+    public List<LecturasGeneralesDto> getAllLecturas() {
+        List<LecturasGeneralesDto> lecturas= new ArrayList<>();
+        LecturasGeneralesDto lecturasOk= new LecturasGeneralesDto("Lecturas Ok",repository.getAllLecturasOk());
+        LecturasGeneralesDto alertasMedias= new LecturasGeneralesDto("Alertas medias",repository.getAllAlertasMedias());
+        LecturasGeneralesDto alertasRojas= new LecturasGeneralesDto("Alertas rojas",repository.getAllAlertasRojas());
+        LecturasGeneralesDto sensoresDesactivados= new LecturasGeneralesDto("Sensores deshabilitados",repository.getAllSensoresDesactivados());
+        lecturas.add(lecturasOk);
+        lecturas.add(alertasMedias);
+        lecturas.add(alertasRojas);
+        lecturas.add(sensoresDesactivados);
+        return lecturas;
     }
 }

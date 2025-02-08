@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 public class JwtService {
     private static final String SECRET_KEY="QJeKx+s7XIv1WbBlj7vJ9CD3Ozj1rB3qjlNZY9ofWKJSaBNBo5r1q9Rru/OWlYb+UHV1n4/LJl1OBYYZZ7rhJEnn5peyHCd+eLJfRdArE37pc+QDIsJlabQtR7tYRa+SnvGRyL01uZsK33+gezV+/GPXBnPTj8fOojDUzJiPAvE=";
     private final long tokenValidityInMilliseconds = 28800 * 1000; // valido por 8hs.
+//    private final long tokenValidityInMilliseconds = 30 * 1000; // valido por 30segundos.
     public String getToken(UserDetails u) {
 
         return getToken(new HashMap<>(),u);

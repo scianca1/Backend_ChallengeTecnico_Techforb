@@ -3,7 +3,9 @@ package com.example.backend_challenge_tecnico_techforb.Services;
 import com.example.backend_challenge_tecnico_techforb.Dtos.Request.PlantaDtoRequest;
 import com.example.backend_challenge_tecnico_techforb.Dtos.Response.LecturasGeneralesDto;
 import com.example.backend_challenge_tecnico_techforb.Dtos.Response.PlantaDtoResponse;
+import com.example.backend_challenge_tecnico_techforb.Dtos.Response.SensoresDto;
 import com.example.backend_challenge_tecnico_techforb.Entitys.Planta;
+import com.example.backend_challenge_tecnico_techforb.Entitys.Sensor;
 import com.example.backend_challenge_tecnico_techforb.Entitys.Usuario;
 import com.example.backend_challenge_tecnico_techforb.Repositorys.PlantaRepository;
 import jakarta.transaction.Transactional;
@@ -70,5 +72,10 @@ public class PlantaService {
         lecturas.add(alertasRojas);
         lecturas.add(sensoresDesactivados);
         return lecturas;
+    }
+
+    public List<SensoresDto> getDetalle(Long idPlanta) {
+       List<SensoresDto> sensores= sensorService.getAllByPlanta(idPlanta).stream().map(SensoresDto::new).toList();
+       return sensores;
     }
 }

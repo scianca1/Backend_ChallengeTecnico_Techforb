@@ -21,7 +21,7 @@ public class PlantaController {
     public ResponseEntity<?> crear (@RequestBody PlantaDtoRequest planta){
         try {
             return ResponseEntity.ok(service.crear(planta));
-        }catch (RuntimeException e){
+        }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("Error",e.getMessage()));
         }
@@ -35,7 +35,7 @@ public class PlantaController {
     public  ResponseEntity<?> getAll(){
         try {
             return ResponseEntity.ok(service.getAll());
-        }catch (RuntimeException e){
+        }catch (Exception e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("Error",e.getMessage()));
         }
     }
@@ -43,9 +43,18 @@ public class PlantaController {
     public ResponseEntity<?>getAllLecturas(){
         try {
             return  ResponseEntity.ok(service.getAllLecturas());
-        }catch (RuntimeException e){
+        }catch (Exception e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("Error",e.getMessage()));
         }
-
     }
+
+    @GetMapping(value = "/{Id}")
+    public ResponseEntity<?>getDetallePlanta(@PathVariable Long Id){
+        try{
+            return ResponseEntity.ok(service.getDetalle(Id));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("Error",e.getMessage()));
+        }
+    }
+
 }

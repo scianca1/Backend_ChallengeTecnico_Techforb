@@ -32,18 +32,23 @@ public class AuthController {
             String userName= authrespose.getNombreUsuario();
             boolean isSecure = httpServletRequest.getScheme().equals("https"); // Verifica si la solicitud es HTTPS
 
+
             Cookie jwtCookie = new Cookie("jwtToken", token);
             jwtCookie.setHttpOnly(false); // Evita el acceso desde JavaScript
             jwtCookie.setSecure(isSecure); // Solo se envía por HTTPS
             jwtCookie.setPath("/"); // Disponible en toda la app
-            jwtCookie.setMaxAge(24 * 60 * 60); // Tiempo de vida en segundos (1 día)
+            jwtCookie.setMaxAge(8 * 60 * 60); // Tiempo de vida en segundos (8 h)
+//            jwtCookie.setMaxAge(30); //30s
+
 
 
             Cookie UserCookie = new Cookie("UserName", userName);
             UserCookie.setHttpOnly(false); // Evita el acceso desde JavaScript
             UserCookie.setSecure(isSecure); // Solo se envía por HTTPS
             UserCookie.setPath("/"); // Disponible en toda la app
-            UserCookie.setMaxAge(24 * 60 * 60); // Tiempo de vida en segundos (1 día)
+            UserCookie.setMaxAge(8 * 60 * 60); // Tiempo de vida en segundos (8h)
+//            UserCookie.setMaxAge(30);// 30 s
+
 
             response.addCookie(jwtCookie);
             response.addCookie(UserCookie);

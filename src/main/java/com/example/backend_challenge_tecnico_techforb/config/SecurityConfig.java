@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,6 +33,7 @@ public class SecurityConfig {
                         csrf.disable())  //desabilitamos el token por defecto que tiene spring
                 .authorizeHttpRequests(authRequest->
                         authRequest
+                                .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                                 .requestMatchers("/auth/**").permitAll()//Permito todo lo que venga a la ruta /auth
                                 .requestMatchers(   "/auth/**",            // Permitir autenticación pública
                                         "/v3/api-docs/**",     // OpenAPI docs

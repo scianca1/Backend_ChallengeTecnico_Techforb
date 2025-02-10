@@ -2,6 +2,8 @@ package com.example.backend_challenge_tecnico_techforb.Controllers;
 
 import com.example.backend_challenge_tecnico_techforb.Dtos.Request.PlantaDtoRequest;
 import com.example.backend_challenge_tecnico_techforb.Services.PlantaService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,13 +20,24 @@ public class PlantaController {
     private PlantaService service;
 
     @PostMapping(value = "/nueva")
-    public ResponseEntity<?> crear (@RequestBody PlantaDtoRequest planta){
+    public ResponseEntity<?> crear (@RequestBody PlantaDtoRequest planta,HttpServletRequest request){
         try {
+            System.out.println("prueva= "+this.getTokenFromCookies(request));
             return ResponseEntity.ok(service.crear(planta));
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("Error",e.getMessage()));
         }
+    }
+    private String getTokenFromCookies(HttpServletRequest request){
+        if(request.getCookies()!=null){
+            for(Cookie cookie:request.getCookies()){
+                if("jwtToken".equals(cookie.getName())){
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
     }
     @GetMapping(value = "/prueva")
     public ResponseEntity<?> prueva (){
@@ -56,5 +69,6 @@ public class PlantaController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("Error",e.getMessage()));
         }
     }
+
 
 }

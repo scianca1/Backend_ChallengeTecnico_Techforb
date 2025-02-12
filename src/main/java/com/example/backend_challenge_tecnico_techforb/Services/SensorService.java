@@ -93,7 +93,7 @@ public class SensorService {
         repository.save(sensorOtrosGases);
     }
     private Long getNroRandom(){
-            return Long.valueOf((long)( Math.random()*1001));
+            return Long.valueOf((long)( Math.random()*101));
     }
 
     public List<Sensor> getAllByPlanta(Long idPlanta) {

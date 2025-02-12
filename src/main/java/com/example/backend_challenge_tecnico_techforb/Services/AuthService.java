@@ -46,6 +46,7 @@ public class AuthService {
             return AuthResponse.builder()
                     .token(token)
                     .nombreUsuario(u.getUsuario())
+                    .rol(u.getRol())
                     .build();
         } catch (AuthenticationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales inválidas");

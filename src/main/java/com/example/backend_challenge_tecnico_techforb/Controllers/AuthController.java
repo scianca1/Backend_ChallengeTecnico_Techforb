@@ -4,6 +4,7 @@ import com.example.backend_challenge_tecnico_techforb.Entitys.Usuario;
 import com.example.backend_challenge_tecnico_techforb.Segurity.Jwt.AuthResponse;
 import com.example.backend_challenge_tecnico_techforb.Segurity.Jwt.LoginRequest;
 import com.example.backend_challenge_tecnico_techforb.Segurity.Jwt.RegisterRequest;
+import com.example.backend_challenge_tecnico_techforb.Segurity.Jwt.Role;
 import com.example.backend_challenge_tecnico_techforb.Services.AuthService;
 import com.example.backend_challenge_tecnico_techforb.Utils.EmailValidator;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,6 +31,7 @@ public class AuthController {
             AuthResponse authrespose=authservice.login(request);
             String token = authrespose.getToken();
             String userName= authrespose.getNombreUsuario();
+            Role rol=authrespose.getRol();
             boolean isSecure = httpServletRequest.getScheme().equals("https"); // Verifica si la solicitud es HTTPS
 
 
@@ -51,9 +53,17 @@ public class AuthController {
             UserCookie.setAttribute("SameSite","Lax");
 //            UserCookie.setMaxAge(30);// 30 s
 
+            Cookie RolCookie = new Cookie("RolUser", rol.toString());
+            RolCookie.setHttpOnly(false); // Evita el acceso desde JavaScript
+            RolCookie.setSecure(isSecure); // Solo se envía por HTTPS //en produccion cambiar por variable isSecure
+            RolCookie.setPath("/"); // Disponible en toda la app
+            RolCookie.setMaxAge(8 * 60 * 60); // Tiempo de vida en segundos (8h)
+            RolCookie.setAttribute("SameSite","Lax");
+
 
             response.addCookie(jwtCookie);
             response.addCookie(UserCookie);
+            response.addCookie(RolCookie);
             return ResponseEntity.ok(Map.of("respose","Autenticacion exitosa!"));
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
@@ -94,12 +104,21 @@ public class AuthController {
                     cookie.setSecure(true); // Cambia a true si usas HTTPS
                     cookie.setPath("/"); // Asegúrate de que la ruta coincida con la original
                     response.addCookie(cookie);
-                    break;
+
+                }
+                if ("UserName".equals(cookie.getName())) {
+                    // Establece la cookie con valor vacío, maxAge 0 para eliminarla
+                    cookie.setValue(null);
+                    cookie.setMaxAge(0); // Expira inmediatamente
+                    cookie.setHttpOnly(true);
+                    cookie.setSecure(true); // Cambia a true si usas HTTPS
+                    cookie.setPath("/"); // Asegúrate de que la ruta coincida con la original
+                    response.addCookie(cookie);
                 }
             }
         }
 
-        return ResponseEntity.ok("Logged out exitosa!");
+        return ResponseEntity.ok(Map.of("mensaje","Logged out exitosa!"));
     }
 }
 

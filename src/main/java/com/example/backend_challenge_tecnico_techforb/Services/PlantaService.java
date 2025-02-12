@@ -78,4 +78,28 @@ public class PlantaService {
        List<SensoresDto> sensores= sensorService.getAllByPlanta(idPlanta).stream().map(SensoresDto::new).toList();
        return sensores;
     }
+    @Transactional
+    public PlantaDtoResponse editPlanta(Long id, PlantaDtoRequest planta)throws Exception {
+        if(planta!=null&&id!=null){
+            Planta entityPlanta= repository.findById(id).orElseThrow(()->new RuntimeException("Tenemos problamas para encontrar La planta"));
+            entityPlanta.setPais(planta.getPais());
+            entityPlanta.setNombre(planta.getNombre());
+            repository.save(entityPlanta);
+            return new PlantaDtoResponse(entityPlanta);
+        }else {
+            throw new Exception("Campos Enviados nulos");
+        }
+
+    }
+    @Transactional
+    public PlantaDtoResponse eliminarPlanta(Long id) {
+        try {
+            Planta entityPlanta= repository.findById(id).orElseThrow(()->new RuntimeException("Tenemos problamas para encontrar La planta"));
+            repository.deleteById(id);
+            return new PlantaDtoResponse(entityPlanta);
+        }catch (Exception e){
+            throw  e;
+        }
+
+    }
 }

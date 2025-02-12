@@ -87,7 +87,7 @@ public class AuthController {
             }
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error",e.getMessage()));
         }
     }
     @GetMapping ("/logout")

@@ -55,17 +55,21 @@ public class AuthService {
 
     }
 
-    public AuthResponse register(RegisterRequest request) {
-        Usuario u = Usuario.builder()
-                .email(request.getEmail())
-                .contracenia(passwordEncoder.encode(request.getPassword()))
-                .usuario(request.getUsuario())
-                .rol(Role.USER)
-                .build();
-        userRepository.save(u);
+    public AuthResponse register(RegisterRequest request) throws Exception{
+        if(!userRepository.existsByEmail(request.getEmail())){
+            Usuario u = Usuario.builder()
+                    .email(request.getEmail())
+                    .contracenia(passwordEncoder.encode(request.getPassword()))
+                    .usuario(request.getUsuario())
+                    .rol(Role.USER)
+                    .build();
+            userRepository.save(u);
 
-        return AuthResponse.builder()
-                .token(jwtService.getToken(u))
-                .build();
+            return AuthResponse.builder()
+                    .token(jwtService.getToken(u))
+                    .build();
+        }else{
+            throw new Exception("El email que intentas registrar ya tiene un usuario asociado");
+        }
     }
 }

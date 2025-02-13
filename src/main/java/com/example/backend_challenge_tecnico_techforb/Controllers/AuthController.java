@@ -40,7 +40,7 @@ public class AuthController {
             jwtCookie.setSecure(isSecure); // Solo se envía por HTTPS//en produccion cambiar por variable isSecure
             jwtCookie.setPath("/"); // Disponible en toda la app
             jwtCookie.setMaxAge(8 * 60 * 60); // Tiempo de vida en segundos (8 h)
-            jwtCookie.setAttribute("SameSite","Lax");
+            jwtCookie.setAttribute("SameSite","none");
 //            jwtCookie.setMaxAge(30); //30s
 
 
@@ -50,7 +50,7 @@ public class AuthController {
             UserCookie.setSecure(isSecure); // Solo se envía por HTTPS //en produccion cambiar por variable isSecure
             UserCookie.setPath("/"); // Disponible en toda la app
             UserCookie.setMaxAge(8 * 60 * 60); // Tiempo de vida en segundos (8h)
-            UserCookie.setAttribute("SameSite","Lax");
+            UserCookie.setAttribute("SameSite","none");
 //            UserCookie.setMaxAge(30);// 30 s
 
             Cookie RolCookie = new Cookie("RolUser", rol.toString());
@@ -58,7 +58,7 @@ public class AuthController {
             RolCookie.setSecure(isSecure); // Solo se envía por HTTPS //en produccion cambiar por variable isSecure
             RolCookie.setPath("/"); // Disponible en toda la app
             RolCookie.setMaxAge(8 * 60 * 60); // Tiempo de vida en segundos (8h)
-            RolCookie.setAttribute("SameSite","Lax");
+            RolCookie.setAttribute("SameSite","none");
 
 
             response.addCookie(jwtCookie);

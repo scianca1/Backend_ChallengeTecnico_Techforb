@@ -37,28 +37,28 @@ public class AuthController {
 
             Cookie jwtCookie = new Cookie("jwtToken", token);
             jwtCookie.setHttpOnly(false); // Evita el acceso desde JavaScript
-            jwtCookie.setSecure(isSecure); // Solo se envía por HTTPS//en produccion cambiar por variable isSecure
+            jwtCookie.setSecure(true); // Solo se envía por HTTPS//en produccion cambiar por variable isSecure
             jwtCookie.setPath("/"); // Disponible en toda la app
             jwtCookie.setMaxAge(8 * 60 * 60); // Tiempo de vida en segundos (8 h)
-            jwtCookie.setAttribute("SameSite","none");
+            jwtCookie.setAttribute("SameSite","None");
 //            jwtCookie.setMaxAge(30); //30s
 
 
 
             Cookie UserCookie = new Cookie("UserName", userName);
             UserCookie.setHttpOnly(false); // Evita el acceso desde JavaScript
-            UserCookie.setSecure(isSecure); // Solo se envía por HTTPS //en produccion cambiar por variable isSecure
+            UserCookie.setSecure(true); // Solo se envía por HTTPS //en produccion cambiar por variable isSecure
             UserCookie.setPath("/"); // Disponible en toda la app
             UserCookie.setMaxAge(8 * 60 * 60); // Tiempo de vida en segundos (8h)
-            UserCookie.setAttribute("SameSite","none");
+            UserCookie.setAttribute("SameSite","None");
 //            UserCookie.setMaxAge(30);// 30 s
 
             Cookie RolCookie = new Cookie("RolUser", rol.toString());
             RolCookie.setHttpOnly(false); // Evita el acceso desde JavaScript
-            RolCookie.setSecure(isSecure); // Solo se envía por HTTPS //en produccion cambiar por variable isSecure
+            RolCookie.setSecure(true); // Solo se envía por HTTPS //en produccion cambiar por variable isSecure
             RolCookie.setPath("/"); // Disponible en toda la app
             RolCookie.setMaxAge(8 * 60 * 60); // Tiempo de vida en segundos (8h)
-            RolCookie.setAttribute("SameSite","none");
+            RolCookie.setAttribute("SameSite","None");
 
 
             response.addCookie(jwtCookie);

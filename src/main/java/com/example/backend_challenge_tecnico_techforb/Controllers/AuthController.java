@@ -45,26 +45,28 @@ public class AuthController {
 
 
 
-            Cookie UserCookie = new Cookie("UserName", userName);
-            UserCookie.setHttpOnly(false); // Evita el acceso desde JavaScript
-            UserCookie.setSecure(true); // Solo se envía por HTTPS //en produccion cambiar por variable isSecure
-            UserCookie.setPath("/"); // Disponible en toda la app
-            UserCookie.setMaxAge(8 * 60 * 60); // Tiempo de vida en segundos (8h)
-            UserCookie.setAttribute("SameSite","None");
-//            UserCookie.setMaxAge(30);// 30 s
-
-            Cookie RolCookie = new Cookie("RolUser", rol.toString());
-            RolCookie.setHttpOnly(false); // Evita el acceso desde JavaScript
-            RolCookie.setSecure(true); // Solo se envía por HTTPS //en produccion cambiar por variable isSecure
-            RolCookie.setPath("/"); // Disponible en toda la app
-            RolCookie.setMaxAge(8 * 60 * 60); // Tiempo de vida en segundos (8h)
-            RolCookie.setAttribute("SameSite","None");
+//            Cookie UserCookie = new Cookie("UserName", userName);
+//            UserCookie.setHttpOnly(false); // Evita el acceso desde JavaScript
+//            UserCookie.setSecure(true); // Solo se envía por HTTPS //en produccion cambiar por variable isSecure
+//            UserCookie.setPath("/"); // Disponible en toda la app
+//            UserCookie.setMaxAge(8 * 60 * 60); // Tiempo de vida en segundos (8h)
+//            UserCookie.setAttribute("SameSite","None");
+////            UserCookie.setMaxAge(30);// 30 s
+//
+//            Cookie RolCookie = new Cookie("RolUser", rol.toString());
+//            RolCookie.setHttpOnly(false); // Evita el acceso desde JavaScript
+//            RolCookie.setSecure(true); // Solo se envía por HTTPS //en produccion cambiar por variable isSecure
+//            RolCookie.setPath("/"); // Disponible en toda la app
+//            RolCookie.setMaxAge(8 * 60 * 60); // Tiempo de vida en segundos (8h)
+//            RolCookie.setAttribute("SameSite","None");
 
 
             response.addCookie(jwtCookie);
-            response.addCookie(UserCookie);
-            response.addCookie(RolCookie);
-            return ResponseEntity.ok(Map.of("respose","Autenticacion exitosa!"));
+//            response.addCookie(UserCookie);
+//            response.addCookie(RolCookie);
+            return ResponseEntity.ok(Map.of("respose","Autenticacion exitosa!",
+                                            "UserName",userName,
+                                            "RolUser",rol.toString()));
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }

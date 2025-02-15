@@ -37,33 +37,13 @@ public class AuthController {
 
             Cookie jwtCookie = new Cookie("jwtToken", token);
             jwtCookie.setHttpOnly(false); // Evita el acceso desde JavaScript
-            jwtCookie.setSecure(true); // Solo se envía por HTTPS//en produccion cambiar por variable isSecure
+            jwtCookie.setSecure(isSecure); // Solo se envía por HTTPS//en produccion cambiar por variable isSecure
             jwtCookie.setPath("/"); // Disponible en toda la app
             jwtCookie.setMaxAge(8 * 60 * 60); // Tiempo de vida en segundos (8 h)
             jwtCookie.setAttribute("SameSite","None");
 //            jwtCookie.setMaxAge(30); //30s
 
-
-
-//            Cookie UserCookie = new Cookie("UserName", userName);
-//            UserCookie.setHttpOnly(false); // Evita el acceso desde JavaScript
-//            UserCookie.setSecure(true); // Solo se envía por HTTPS //en produccion cambiar por variable isSecure
-//            UserCookie.setPath("/"); // Disponible en toda la app
-//            UserCookie.setMaxAge(8 * 60 * 60); // Tiempo de vida en segundos (8h)
-//            UserCookie.setAttribute("SameSite","None");
-////            UserCookie.setMaxAge(30);// 30 s
-//
-//            Cookie RolCookie = new Cookie("RolUser", rol.toString());
-//            RolCookie.setHttpOnly(false); // Evita el acceso desde JavaScript
-//            RolCookie.setSecure(true); // Solo se envía por HTTPS //en produccion cambiar por variable isSecure
-//            RolCookie.setPath("/"); // Disponible en toda la app
-//            RolCookie.setMaxAge(8 * 60 * 60); // Tiempo de vida en segundos (8h)
-//            RolCookie.setAttribute("SameSite","None");
-
-
             response.addCookie(jwtCookie);
-//            response.addCookie(UserCookie);
-//            response.addCookie(RolCookie);
             return ResponseEntity.ok(Map.of("respose","Autenticacion exitosa!",
                                             "UserName",userName,
                                             "RolUser",rol.toString()));
@@ -99,17 +79,15 @@ public class AuthController {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if ("jwtToken".equals(cookie.getName())) {
-                    // Establece la cookie con valor vacío, maxAge 0 para eliminarla
                     cookie.setValue(null);
                     cookie.setMaxAge(0); // Expira inmediatamente
                     cookie.setHttpOnly(true);
-                    cookie.setSecure(true); // Cambia a true si usas HTTPS
+                    cookie.setSecure(true); // Cambia a true si usa HTTPS
                     cookie.setPath("/"); // Asegúrate de que la ruta coincida con la original
                     response.addCookie(cookie);
 
                 }
                 if ("UserName".equals(cookie.getName())) {
-                    // Establece la cookie con valor vacío, maxAge 0 para eliminarla
                     cookie.setValue(null);
                     cookie.setMaxAge(0); // Expira inmediatamente
                     cookie.setHttpOnly(true);
